@@ -10,6 +10,7 @@ var {ObjectID}		= require("mongodb");
 
 
 var app				= express();
+const port 			= process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
@@ -75,8 +76,8 @@ app.get("/todos/:id", (req,res) => {
 
 
 
-app.listen(process.env.Port || 3000, (req,res) =>{
-	console.log("Server Deployed!");
+app.listen(port, (req,res) =>{
+	console.log(`Server Deployed on port ${port}!`);
 });
 
 
