@@ -35,7 +35,7 @@ app.post("/todos", (req,res) => {
 
 	todo.save().then((doc) =>{
 		res.send(doc);
-	}, (error) =>{	
+	}).catch((error) =>{	
 		res.status(400).send(error);
 	});
 });
@@ -43,7 +43,7 @@ app.post("/todos", (req,res) => {
 app.get("/todos", (req,res) =>{
 	Todo.find().then((todos) => {
 		res.send({todos});
-	}, (e) => {
+	}).catch((e) => {
 		res.status(400).send(e);
 	});
 });
@@ -69,7 +69,25 @@ app.get("/todos/:id", (req,res) => {
 		}
 		res.send({todo});	
 	// error / 400 -- send back nothing	
-	}, (e) => {
+	}).catch((e) => {
+		res.status(400).send();
+	});
+});
+
+
+app.delete("/todos/:id", (req,res) => {
+
+	var id= req.params.id
+	if (!ObjectID.isValid(id)) {
+		res.status(404).send("ID is not valid, Please try again")
+	}
+	// remove todo by id
+	Todo.findByIdAndRemove(id).then((todo) => {
+		if (!todo) {
+			res.status(404).send();
+			}
+			res.status(200).send({todo});
+	}).catch((e) => {
 		res.status(400).send();
 	});
 });
