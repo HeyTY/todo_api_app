@@ -75,7 +75,7 @@ app.get("/todos/:id", (req,res) => {
 
 
 
-app.listen(3000, (req,res) =>{
+app.listen(process.env.Port || 3000, (req,res) =>{
 	console.log("Server Deployed!");
 });
 
